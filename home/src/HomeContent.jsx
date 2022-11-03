@@ -176,18 +176,7 @@ export default function HomeContent() {
                                         <span className="home-product-item__sale-off-laybel">GIẢM</span>
                                     </div>
                                 </Link>
-                                    {LoggerIn && (
-                                        <div className="text-right mt-2"> 
-                                            <button 
-                                                className="btn-df"
-                                                onClick={() => addToCart(product.id)}
-                                                id={`addToCart_${product.id}`}
-                                            >
-                                                Add to Cart
-
-                                            </button>
-                                        </div>
-                                    )}
+                                    
                             </div>
 
 

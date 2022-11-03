@@ -15,13 +15,13 @@ export interface Product {
 const products: Product[] = [
     {
         id: 1,
-        name: 'Giay the thao',
-        price_old: 5.99,
+        name: 'Giay the thao gia re danh cho hoc sinh sinh vien',
+        price_old: 100,
         price_new: 5.99,
         sold: 30,
         brand: 'Nike',
         origin: 'Nhat Ban',
-        discount: 10,
+        discount: 12,
 
         description: 'Phu hop moi lua tuoi',
         image: 'http://localhost:8080/shopping-item1.jpeg',
@@ -30,7 +30,7 @@ const products: Product[] = [
     },
     {
         id: 2,
-        name: 'Giay the thao',
+        name: 'Giay Nike Air Force One chinh hang ',
         price_old: 5.99,
         price_new: 5.99,
         sold: 30,
