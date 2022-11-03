@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {useParams } from "react-router-dom";
-import { getProductById } from 'home/products';
+import { currency ,getProductById } from 'home/products';
 import placeAddToCart from 'addtocart/placeAddToCart';
 
 export default function PDPContent() {
@@ -45,24 +45,24 @@ export default function PDPContent() {
                         <div className="">
                             <div className="col-df l-12 m-df-12 c-12 ">
 
-                                <img className='products-details__img-lg' src={product.image} alt="" />
+                                <img className='products-details__img-lg' src={product.image} alt={product.name} />
                             </div>
                         </div>
                         <div className="flex">
                             <div className="col-df l-2-4 products-details__img-sm">
-                                <img src={product.image} alt="" />
+                                <img src={product.image} alt={product.name} />
                             </div>
                             <div className="col-df l-2-4 products-details__img-sm">
-                                <img src={product.image} alt="" />
+                                <img src={product.image} alt={product.name} />
                             </div>
                             <div className="col-df l-2-4 products-details__img-sm">
-                                <img src={product.image} alt="" />
+                                <img src={product.image} alt={product.name} />
                             </div>
                             <div className="col-df l-2-4 products-details__img-sm">
-                                <img src={product.image} alt="" />
+                                <img src={product.image} alt={product.name} />
                             </div>
                             <div className="col-df l-2-4 products-details__img-sm">
-                                <img src={product.image} alt="" />
+                                <img src={product.image} alt={product.name} />
                             </div>
                         </div>
                    
@@ -100,8 +100,8 @@ export default function PDPContent() {
                         </div>
                     </div>
                     <div className="grid__full-width products-details__body-price">
-                        <span className="products-details__body-price-item product-old-price">₫{product.price_old}</span>
-                        <span className="products-details__body-price-item product-new-price">₫{product.price_new}</span>
+                        <span className="products-details__body-price-item product-old-price">{currency.format(product.price_old)}</span>
+                        <span className="products-details__body-price-item product-new-price">{currency.format(product.price_old - product.price_old * product.discount / 100)}</span>
                         <span className="products-details__body-price-item product-discount-price">{product.discount}%
                             GIẢM</span>
                     </div>
@@ -179,9 +179,9 @@ export default function PDPContent() {
                         
                     </ul>
 
-                    <div>
+                    <div className='flex'>
 
-                        <div ref={addToCart} className="btn-df btn-cart">
+                        <div ref={addToCart} >
                             
                         </div>
                         <div className="btn-df btn-cart-buy">Mua ngay</div>

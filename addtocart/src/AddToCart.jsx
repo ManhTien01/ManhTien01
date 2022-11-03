@@ -13,14 +13,14 @@ export default ({ id }) => {
 
     return (
         <Show when={loggerIn()}>
-            <button
+            <div
                 onClick={() => addToCart(id)}
-                className="btn-df"
+                className="btn-df btn-cart"
             >
                 <i className="fa-solid fa-cart-plus"></i>
 
                 Add To Cart
-            </button>
+            </div>
         </Show>
     )
 }

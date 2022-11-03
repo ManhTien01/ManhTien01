@@ -146,7 +146,7 @@ export default function HomeContent() {
                                     <h4 className="home-product-item__name">{product.name}</h4>
                                     <div className="home-product-item__price">
                                         <span className="home-product-item__price-old">{currency.format(product.price_old)}</span>
-                                        <span className="home-product-item__price-new">{currency.format(product.price_new)}</span>
+                                        <span className="home-product-item__price-new">{currency.format(product.price_old - product.price_old * product.discount / 100)}</span>
                                     </div>
                                     <div className="home-product-item__action">
                                         <span className="home-product-item__like home-product-item__liked">
