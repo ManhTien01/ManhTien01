@@ -136,17 +136,17 @@ export default function HomeContent() {
 
                 <div className="row-df sm-gutter">
                     {products.map((product) => (
-                        <div className="col-df l-2-4 m-df-4 c-6 home-product-item-wrapper" key={product.id}>
+                        <div className="col-df l-2-4 m-df-4 c-6 home-product-item-wrapper" key={product.slug}>
                             <div className="home-product-item">
-                                <Link to={`products/${product.id}`}>
+                                <Link to={`products/${product.slug}`}>
                                     <div className="home-product-item__img" >
 
-                                        <img src={product.image} />
+                                        <img src={product.avatar} />
                                     </div>
-                                    <h4 className="home-product-item__name">{product.name}</h4>
+                                    <h4 className="home-product-item__name">{product.name}đ</h4>
                                     <div className="home-product-item__price">
-                                        <span className="home-product-item__price-old">{currency.format(product.price_old)}</span>
-                                        <span className="home-product-item__price-new">{currency.format(product.price_old - product.price_old * product.discount / 100)}</span>
+                                        <span className="home-product-item__price-old">{product.price}đ</span>
+                                        <span className="home-product-item__price-new">{product.price - product.price* product.discount / 100}đ</span>
                                     </div>
                                     <div className="home-product-item__action">
                                         <span className="home-product-item__like home-product-item__liked">
