@@ -14,7 +14,7 @@ export default function MiniCart() {
             setItems(c?.cartItems)
         })
     }, [])
-
+    
     if (!items) return (
         <>
             <div className="header__cart" onClick={() => setShowCart(!showCart)}>

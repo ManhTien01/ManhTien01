@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {Link} from "react-router-dom"
-import { currency, getProducts } from "./products";
-import {addToCart, useLoggerIn} from "cart/cart"
+import {getProducts } from "./products";
+import {useLoggerIn} from "cart/cart"
 
 export default function HomeContent() {
     const LoggerIn = useLoggerIn()
@@ -138,12 +138,12 @@ export default function HomeContent() {
                     {products.map((product) => (
                         <div className="col-df l-2-4 m-df-4 c-6 home-product-item-wrapper" key={product.slug}>
                             <div className="home-product-item">
-                                <Link to={`products/${product.slug}`}>
+                                <Link to={`products/${product._id}`}>
                                     <div className="home-product-item__img" >
 
                                         <img src={product.avatar} />
                                     </div>
-                                    <h4 className="home-product-item__name">{product.name}đ</h4>
+                                    <h4 className="home-product-item__name">{product.name}</h4>
                                     <div className="home-product-item__price">
                                         <span className="home-product-item__price-old">{product.price}đ</span>
                                         <span className="home-product-item__price-new">{product.price - product.price* product.discount / 100}đ</span>

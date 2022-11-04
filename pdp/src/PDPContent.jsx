@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {useParams } from "react-router-dom";
-import { currency ,getProductById } from 'home/products';
+import { useParams } from "react-router-dom";
+import { currency, getProductById } from 'home/products';
 import placeAddToCart from 'addtocart/placeAddToCart';
 
 export default function PDPContent() {
-    const {id} = useParams();
+    const { id } = useParams();
     const [product, setProduct] = useState(null);
+
     useEffect(() => {
         if (id) {
             getProductById(id).then(setProduct)
@@ -18,10 +19,12 @@ export default function PDPContent() {
     const addToCart = useRef(null)
 
     useEffect(() => {
-        if(addToCart.current) {
+        if (addToCart.current) {
             placeAddToCart(addToCart.current, product.id)
         }
     }, [product])
+
+
 
     if (!product) {
         return null;
@@ -41,31 +44,31 @@ export default function PDPContent() {
             </div>
             <div className="row-df products-details">
                 <div className="col-df l-5 m-df-12 c-12 products-details__img">
-                   
-                        <div className="">
-                            <div className="col-df l-12 m-df-12 c-12 ">
 
-                                <img className='products-details__img-lg' src={product.image} alt={product.name} />
-                            </div>
+                    <div className="">
+                        <div className="col-df l-12 m-df-12 c-12 ">
+
+                            <img className='products-details__img-lg' src={product.avatar} alt={product.name} />
                         </div>
-                        <div className="flex">
-                            <div className="col-df l-2-4 products-details__img-sm">
-                                <img src={product.image} alt={product.name} />
-                            </div>
-                            <div className="col-df l-2-4 products-details__img-sm">
-                                <img src={product.image} alt={product.name} />
-                            </div>
-                            <div className="col-df l-2-4 products-details__img-sm">
-                                <img src={product.image} alt={product.name} />
-                            </div>
-                            <div className="col-df l-2-4 products-details__img-sm">
-                                <img src={product.image} alt={product.name} />
-                            </div>
-                            <div className="col-df l-2-4 products-details__img-sm">
-                                <img src={product.image} alt={product.name} />
-                            </div>
+                    </div>
+                    <div className="flex">
+                        <div className="col-df l-2-4 products-details__img-sm">
+                            <img src={product.avatar} alt={product.name} />
                         </div>
-                   
+                        <div className="col-df l-2-4 products-details__img-sm">
+                            <img src={product.avatar} alt={product.name} />
+                        </div>
+                        <div className="col-df l-2-4 products-details__img-sm">
+                            <img src={product.avatar} alt={product.name} />
+                        </div>
+                        <div className="col-df l-2-4 products-details__img-sm">
+                            <img src={product.avatar} alt={product.name} />
+                        </div>
+                        <div className="col-df l-2-4 products-details__img-sm">
+                            <img src={product.avatar} alt={product.name} />
+                        </div>
+                    </div>
+
 
                 </div>
                 <div className="col-df l-7 m-df-12 c-12 products-details__body">
@@ -100,8 +103,8 @@ export default function PDPContent() {
                         </div>
                     </div>
                     <div className="grid__full-width products-details__body-price">
-                        <span className="products-details__body-price-item product-old-price">{currency.format(product.price_old)}</span>
-                        <span className="products-details__body-price-item product-new-price">{currency.format(product.price_old - product.price_old * product.discount / 100)}</span>
+                        <span className="products-details__body-price-item product-old-price">{product.price}</span>
+                        <span className="products-details__body-price-item product-new-price">{product.price - product.price * product.discount / 100}</span>
                         <span className="products-details__body-price-item product-discount-price">{product.discount}%
                             GIẢM</span>
                     </div>
@@ -160,9 +163,16 @@ export default function PDPContent() {
                         <li className="products-details__body-option products-details__body-color">
                             <span className="products-details__option-item">Màu sắc</span>
                             <ul className="product-color">
+                                {
 
-                                <li className="product-color-item"></li>
+                                    Array.from(product.color).map(e => {
+                                        return (
+                                            <li className="product-color-item" key={e}>{e}</li>
 
+                                        )
+                                    })
+                                }
+                               
 
 
                             </ul>
@@ -170,19 +180,29 @@ export default function PDPContent() {
                         <li className="products-details__body-option products-details__body-size">
                             <span className="products-details__option-item">Kích cỡ</span>
                             <ul className="product-size">
+                                {
+                                  
+                                    Array.from(product.size).map(e => {
+                                        return (
 
-                                <li className="product-size-item"></li>
+                                            <li className="product-size-item" key={e}>{e}</li>
+
+                                        )
+                                    })
+                                }
+
+
 
                             </ul>
 
                         </li>
-                        
+
                     </ul>
 
-                    <div className='flex'>
+                    <div className='flex mt-8'>
 
                         <div ref={addToCart} >
-                            
+
                         </div>
                         <div className="btn-df btn-cart-buy">Mua ngay</div>
 
