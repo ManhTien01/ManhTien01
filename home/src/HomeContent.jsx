@@ -9,6 +9,7 @@ export default function HomeContent() {
 
     useEffect(() => {
         getProducts().then(setProducts)
+        
     }, [])
 
     return (
