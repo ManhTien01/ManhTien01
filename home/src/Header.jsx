@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom"
-
+import {findProductByText} from "./products"
 import MiniCart from "cart/MiniCart"
 import Login from "cart/Login"
 import Register from "cart/Register";
@@ -102,11 +102,11 @@ export default function Header() {
                     </label>
                     <div className="header__logo hide-on-tablet">
                         <div className="header__logo-link">
-                            <Link to="/">
+                            <a href="/">
 
                                 <i className="fa-solid fa-bag-shopping header__logo-icon"></i>
                                 <span className="header__logo-title">Shoes</span>
-                            </Link>
+                            </a>
                         </div>
                     </div>
 
@@ -143,7 +143,7 @@ export default function Header() {
 
                             </ul>
                         </div>
-                        <button className="header__search-btn">
+                        <button className="header__search-btn"  onClick={findProductByText}>
                             <i className="header__search-btn-icon fa-solid fa-magnifying-glass"></i>
 
                         </button>
