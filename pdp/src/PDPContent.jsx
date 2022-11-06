@@ -186,175 +186,176 @@ export default function PDPContent() {
         </div>
       </div>
       <div className="row-df voteproduct">
-    <div className="lg-gutters vote">
-        <div className="infor-shop">
+        <div className="lg-gutters vote">
+          <div className="infor-shop">
             <div className="shop-avatar">
-               <img  className="shopee-avatar__img " src="https://cf.shopee.vn/file/171f7785a60935e2f6ddae65c26d0285_tn" alt="anh" />
+              <img className="shopee-avatar__img " src="https://cf.shopee.vn/file/171f7785a60935e2f6ddae65c26d0285_tn" alt="anh" />
             </div>
             <div className="shop-infor-detail">
-                <div className="name-shop">miu_authentic</div>
-                <div className="activity-shop ">Online 23 phút trước</div>
-                <div className="contact">
-                    <button type="button" className="contact-box">
-                        <i className="fa-solid fa-cart-plus"></i>
-                        {/* <svg viewBox="0 0 16 16" className="shopee-svg-icon pa-h8D">
+              <div className="name-shop">miu_authentic</div>
+              <div className="activity-shop ">Online 23 phút trước</div>
+              <div className="contact">
+                <button type="button" className="contact-box">
+                  <i className="fa-solid fa-cart-plus"></i>
+                  {/* <svg viewBox="0 0 16 16" className="shopee-svg-icon pa-h8D">
                             <g fill-rule="evenodd">
                                 <path
                                     d="M15 4a1 1 0 01.993.883L16 5v9.932a.5.5 0 01-.82.385l-2.061-1.718-8.199.001a1 1 0 01-.98-.8l-.016-.117-.108-1.284 8.058.001a2 2 0 001.976-1.692l.018-.155L14.293 4H15zm-2.48-4a1 1 0 011 1l-.003.077-.646 8.4a1 1 0 01-.997.923l-8.994-.001-2.06 1.718a.5.5 0 01-.233.108l-.087.007a.5.5 0 01-.492-.41L0 11.732V1a1 1 0 011-1h11.52zM3.646 4.246a.5.5 0 000 .708c.305.304.694.526 1.146.682A4.936 4.936 0 006.4 5.9c.464 0 1.02-.062 1.608-.264.452-.156.841-.378 1.146-.682a.5.5 0 10-.708-.708c-.185.186-.445.335-.764.444a4.004 4.004 0 01-2.564 0c-.319-.11-.579-.258-.764-.444a.5.5 0 00-.708 0z">
                                 </path>
                             </g>
                         </svg> */}
-                    </button>
-                    <span>Chat ngay</span>
-                </div>
-                <div className="watch-shop">
-                    {/* <svg className="shopee-svg-icon" enable-background="new 0 0 15 15" viewBox="0 0 15 15" x="0" y="0"
+                </button>
+                <span>Chat ngay</span>
+              </div>
+              <div className="watch-shop">
+                {/* <svg className="shopee-svg-icon" enable-background="new 0 0 15 15" viewBox="0 0 15 15" x="0" y="0"
                         stroke-width="0">
                         <path
                             d="m13 1.9c-.2-.5-.8-1-1.4-1h-8.4c-.6.1-1.2.5-1.4 1l-1.4 4.3c0 .8.3 1.6.9 2.1v4.8c0 .6.5 1 1.1 1h10.2c.6 0 1.1-.5 1.1-1v-4.6c.6-.4.9-1.2.9-2.3zm-11.4 3.4 1-3c .1-.2.4-.4.6-.4h8.3c.3 0 .5.2.6.4l1 3zm .6 3.5h.4c.7 0 1.4-.3 1.8-.8.4.5.9.8 1.5.8.7 0 1.3-.5 1.5-.8.2.3.8.8 1.5.8.6 0 1.1-.3 1.5-.8.4.5 1.1.8 1.7.8h.4v3.9c0 .1 0 .2-.1.3s-.2.1-.3.1h-9.5c-.1 0-.2 0-.3-.1s-.1-.2-.1-.3zm8.8-1.7h-1v .1s0 .3-.2.6c-.2.1-.5.2-.9.2-.3 0-.6-.1-.8-.3-.2-.3-.2-.6-.2-.6v-.1h-1v .1s0 .3-.2.5c-.2.3-.5.4-.8.4-1 0-1-.8-1-.8h-1c0 .8-.7.8-1.3.8s-1.1-1-1.2-1.7h12.1c0 .2-.1.9-.5 1.4-.2.2-.5.3-.8.3-1.2 0-1.2-.8-1.2-.9z">
                         </path>
                     </svg> */}
-                    <span className = "view_s"> Xem Shop</span>
-                </div>
+                <span className="view_s"> Xem Shop</span>
+              </div>
             </div>
-        </div>
-        <div className="vote-detail">
+          </div>
+          <div className="vote-detail">
             <div className="Reviews-from-customers">
-                <div className="box-vote">
-                    <label className="vote-lable">Đánh giá:</label>
-                    <span className="numeral">247</span>
-                </div>
-                <div className="box-vote">
-                    <label className="vote-lable">Sản phẩm:</label>
-                    <span className="numeral">196</span>
-                </div>
+              <div className="box-vote">
+                <label className="vote-lable">Đánh giá:</label>
+                <span className="numeral">247</span>
+              </div>
+              <div className="box-vote">
+                <label className="vote-lable">Sản phẩm:</label>
+                <span className="numeral">196</span>
+              </div>
             </div>
             <div className="Reviews-from-customers setting-mid">
-                <div className="box-vote">
-                    <label className="vote-lable">tỉ lệ phản hồi:</label>
-                    <span className="numeral">91%</span>
-                </div>
-                <div className="box-vote">
-                    <label className="vote-lable">thời gian phản hồi:</label>
-                    <span className="numeral">trong vài phút</span>
-                </div>
+              <div className="box-vote">
+                <label className="vote-lable">tỉ lệ phản hồi:</label>
+                <span className="numeral">91%</span>
+              </div>
+              <div className="box-vote">
+                <label className="vote-lable">thời gian phản hồi:</label>
+                <span className="numeral">trong vài phút</span>
+              </div>
             </div>
             <div className="Reviews-from-customers setting-right">
-                <div className="box-vote">
-                    <label className="vote-lable">tham gia:</label>
-                    <span className="numeral">13 tháng trước</span>
-                </div>
-                <div className="box-vote">
-                    <label className="vote-lable">Người theo dõi:</label>
-                    <span className="numeral">9,9k</span>
-                </div>
+              <div className="box-vote">
+                <label className="vote-lable">tham gia:</label>
+                <span className="numeral">13 tháng trước</span>
+              </div>
+              <div className="box-vote">
+                <label className="vote-lable">Người theo dõi:</label>
+                <span className="numeral">9,9k</span>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
-    <div className="lg-gutters describe-product">
-        <div className="describe">
+        <div className="lg-gutters describe-product">
+          <div className="describe">
             <div className="describe-head">
-                <h2 className="h2_detail">CHI TIẾT SẢN PHẨM</h2>
+              <h2 className="h2_detail">CHI TIẾT SẢN PHẨM</h2>
             </div>
-        </div>
-        <div className="describe-detail">
+          </div>
+          <div className="describe-detail">
             <div className="content-describe">
-                <div className="OktMMO">
-                    <label className="_27NlLf">Danh Mục</label>
-                    <div className="flex items-center _3AZ0Vk">
-                        <a className="CyVtI7 _2yC5g9" href="/">Shopee</a>
-                        {/* <svg enable-background="new 0 0 11 11" viewBox="0 0 11 11" x="0" y="0"
+              <div className="OktMMO flex">
+                <label className="_27NlLf">Danh Mục</label>
+                <div className="flex items-center _3AZ0Vk">
+                  <a className="CyVtI7 _2yC5g9" href="/">Shopee</a>
+                  {/* <svg enable-background="new 0 0 11 11" viewBox="0 0 11 11" x="0" y="0"
                             className="shopee-svg-icon _2ON4et icon-arrow-right">
                             <path
                                 d="m2.5 11c .1 0 .2 0 .3-.1l6-5c .1-.1.2-.3.2-.4s-.1-.3-.2-.4l-6-5c-.2-.2-.5-.1-.7.1s-.1.5.1.7l5.5 4.6-5.5 4.6c-.2.2-.2.5-.1.7.1.1.3.2.4.2z">
                             </path>
                         </svg>
                          */}
-                         <i className="fa-solid fa-angle-right"></i>
-                        <a className="CyVtI7 _2yC5g9" href="/Giày-Dép-Nam-cat.11035801">Giày Dép Nam</a>
-                        {/* <svg
+                  <i className="fa-solid fa-angle-right source-link_detail-product-icon"></i>
+                  <a className="CyVtI7 _2yC5g9" href="/Giày-Dép-Nam-cat.11035801">Giày Dép Nam</a>
+                  {/* <svg
                             enable-background="new 0 0 11 11" viewBox="0 0 11 11" x="0" y="0"
                             className="shopee-svg-icon _2ON4et icon-arrow-right">
                             <path
                                 d="m2.5 11c .1 0 .2 0 .3-.1l6-5c .1-.1.2-.3.2-.4s-.1-.3-.2-.4l-6-5c-.2-.2-.5-.1-.7.1s-.1.5.1.7l5.5 4.6-5.5 4.6c-.2.2-.2.5-.1.7.1.1.3.2.4.2z">
                             </path>
                         </svg> */}
-                        <i className="fa-solid fa-angle-right"></i>
-                        <a className="CyVtI7 _2yC5g9" href="/Giày-Thể-Thao-Sneakers-cat.11035801.11035807">Giày Thể Thao/
-                            Sneakers</a>
-                    </div>
+                  <i className="fa-solid fa-angle-right source-link_detail-product-icon"></i>
+                  <a className="CyVtI7 _2yC5g9" href="/Giày-Thể-Thao-Sneakers-cat.11035801.11035807">Giày Thể Thao/
+                    Sneakers</a>
                 </div>
-                <div className="box-describe">
-                    <label className="lable-describe">Thương hiệu </label>
-                    <a className="material" href="/search?brands=2561477">FILA</a>
-                </div>
-                <div className="box-describe">
-                    <label className="lable-describe">Giày cao gót </label>
-                    <div className="material">Trung Bình</div>
-                </div>
-                <div className="box-describe">
-                    <label className="lable-describe">Loại Khóa</label>
-                    <div className="material">Khóa dây</div>
-                </div>
-                <div className="box-describe">
-                    <label className="lable-describe">Loại Khóa </label>
-                    <div className="material">Khóa dây</div>
-                </div>
-                <div className="box-describe">
-                    <label className="lable-describe">Chất liệu </label>
-                    <div className="material">Da, Cao su</div>
-                </div>
-                <div className="box-describe">
-                    <label className="lable-describe">Xuất xứ </label>
-                    <div className="material">Hàn Quốc</div>
-                </div>
-                <div className="box-describe">
-                    <label className="lable-describe">Dịp </label>
-                    <div className="material">Hằng Ngày</div>
-                </div>
-                <div className="box-describe">
-                    <label className="lable-describe">Chiều cao cổ giày </label>
-                    <div className="material">Cổ thấp</div>
-                </div>
-                <div className="box-describe">
-                    <label className="lable-describe">Kho hàng </label>
-                    <div className="material">81</div>
-                </div>
-                <div className="box-describe">
-                    <label className="lable-describe">Gửi từ </label>
-                    <div className="material">Hà Nội</div>
-                </div>
+              </div>
+              <div className="box-describe">
+                <label className="lable-describe">Thương hiệu </label>
+                <a className="material" href="/search?brands=2561477">FILA</a>
+              </div>
+              <div className="box-describe">
+                <label className="lable-describe">Giày cao gót </label>
+                <div className="material">Trung Bình</div>
+              </div>
+              <div className="box-describe">
+                <label className="lable-describe">Loại Khóa</label>
+                <div className="material">Khóa dây</div>
+              </div>
+              <div className="box-describe">
+                <label className="lable-describe">Loại Khóa </label>
+                <div className="material">Khóa dây</div>
+              </div>
+              <div className="box-describe">
+                <label className="lable-describe">Chất liệu </label>
+                <div className="material">Da, Cao su</div>
+              </div>
+              <div className="box-describe">
+                <label className="lable-describe">Xuất xứ </label>
+                <div className="material">Hàn Quốc</div>
+              </div>
+              <div className="box-describe">
+                <label className="lable-describe">Dịp </label>
+                <div className="material">Hằng Ngày</div>
+              </div>
+              <div className="box-describe">
+                <label className="lable-describe">Chiều cao cổ giày </label>
+                <div className="material">Cổ thấp</div>
+              </div>
+              <div className="box-describe">
+                <label className="lable-describe">Kho hàng </label>
+                <div className="material">81</div>
+              </div>
+              <div className="box-describe">
+                <label className="lable-describe">Gửi từ </label>
+                <div className="material">Hà Nội</div>
+              </div>
             </div>
-        </div>
-        <div className="paint-product">
+          </div>
+          <div className="paint-product">
             <div className="paint-head">
-                <h2>MÔ TẢ SẢN PHẨM</h2>
+              <h2>MÔ TẢ SẢN PHẨM</h2>
             </div>
             <div className="paint-content">
-                <span>Có gì ở đôi Fila sandblast low cực xinh này ạ???
-                    Được làm từ chất liệu da tổng hợp giúp sản phẩm có độ bền cao và nâng niu từng bước chân của bạn.
-                    Kiểu dáng giày năng động với thiết kế cổ thấp, thắt dây khỏe khoắn, màu sắc hợp thời trang. Đế cao
-                    su chắc chắn có khả năng ma sát tốt, chống trơn trượt, có thể di chuyển trên nhiều địa hình. Ngoài
-                    ra bạn có thể dễ dàng kết hợp giày thể thao FILA với nhiều phụ kiện và trang phục khác nhau để tạo
-                    nên một sét đồ thật xinh
-                    <span>
-                        Tận 3 màu cho chị em lận ạ
-                    </span>
-                    ✨ HÀNG CHUẨN AUTH CHÍNH HÃNG 100%
-                    - ORDER WEB HÀN/NHẬT// US UK
-                    - FULL BOX, cung cấp bill đầy đủ nếu cần
-                    - Ship toàn quốc
-                    Một đôi giày thể thao giúp các nàng tự tin, phong cách và cá tính hơn với những bộ cánh nâng động.
-                    Đồng thời, khi mang giày thể thao giúp bảo vệ đôi chân hoàn hảo tránh được những chấn thương bất ngờ
-                    gặp phải khi di chuyển và bảo vệ da tránh được những tác hại từ tia UV.
-                    ✨Một số sản phẩm có chữ "Made in China" hoặc "Made in Vietnam",... do xưởng sản xuất ở nước khác
-                    nhau như Trung Quốc, Việt Nam,...
-                    ✨ Liên hệ shop để order size khác
-                </span>
+              <span>
+                Có gì ở đôi Fila sandblast low cực xinh này ạ???
+                Được làm từ chất liệu da tổng hợp giúp sản phẩm có độ bền cao và nâng niu từng bước chân của bạn.
+                Kiểu dáng giày năng động với thiết kế cổ thấp, thắt dây khỏe khoắn, màu sắc hợp thời trang. Đế cao
+                su chắc chắn có khả năng ma sát tốt, chống trơn trượt, có thể di chuyển trên nhiều địa hình. Ngoài
+                ra bạn có thể dễ dàng kết hợp giày thể thao FILA với nhiều phụ kiện và trang phục khác nhau để tạo
+                nên một sét đồ thật xinh
+
+                Tận 3 màu cho chị em lận ạ
+
+                ✨ HÀNG CHUẨN AUTH CHÍNH HÃNG 100%
+                - ORDER WEB HÀN/NHẬT// US UK
+                - FULL BOX, cung cấp bill đầy đủ nếu cần
+                - Ship toàn quốc
+                Một đôi giày thể thao giúp các nàng tự tin, phong cách và cá tính hơn với những bộ cánh nâng động.
+                Đồng thời, khi mang giày thể thao giúp bảo vệ đôi chân hoàn hảo tránh được những chấn thương bất ngờ
+                gặp phải khi di chuyển và bảo vệ da tránh được những tác hại từ tia UV.
+                ✨Một số sản phẩm có chữ "Made in China" hoặc "Made in Vietnam",... do xưởng sản xuất ở nước khác
+                nhau như Trung Quốc, Việt Nam,...
+                ✨ Liên hệ shop để order size khác
+              </span>
             </div>
+          </div>
         </div>
-    </div>
-</div>
+      </div>
 
 
     </div>

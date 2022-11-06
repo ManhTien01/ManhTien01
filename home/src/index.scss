@@ -2106,14 +2106,35 @@ i.home-product-item__like-icon-fill {
   top: 10px;
   margin-left: 40px;
 }
+
 .box-describe {
   display: flex;
+  margin-top: 12px;
+
+}
+
+._3AZ0Vk {
+  flex: 7;
+}
+
+._27NlLf {
+  color: #999999;
+  flex: 1;
+}
+._2yC5g9 {
+  color: #0055AA;
+  
+}
+
+.source-link_detail-product-icon {
+  margin: 0 4px;
 }
 .lable-describe {
-  flex: 2;
+  color: #999999;
+  flex: 1;
 }
 .material {
-  flex: 4;
+  flex: 7;
 }
 .paint-product {
   font-size: 1.5em;
