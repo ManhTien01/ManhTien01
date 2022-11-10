@@ -10,15 +10,17 @@ import Box from '@mui/material/Box';
 export default function HomeContent() {
     const [products, setProducts] = React.useState([])
     const [value, setValue] = React.useState('two');
-    const [valueSort, setValueSort] = React.useState('')
+    const [valueSort, setValueSort] = React.useState('sort_time=desc')
     const [searchParams, setSearchParams] = useSearchParams();
+    const [numberPage, setNumberPage] = React.useState(1);
+    const [category, setCategory] = React.useState('')
 
     React.useEffect(() => {
-        if (searchParams.get('s') !== null) { getProducts(1, valueSort, searchParams.get('s')).then(setProducts) }
+        if (searchParams.get('s') !== null) { getProducts(numberPage, valueSort, searchParams.get('s'),category).then(setProducts) }
         else {
-            getProducts(1, valueSort, '').then(setProducts)
+            getProducts(numberPage, valueSort, '',category).then(setProducts)
         }
-    }, [valueSort])
+    }, [numberPage,valueSort,category])
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -28,7 +30,7 @@ export default function HomeContent() {
     }
 
     const handlePageClick = (event) => {
-        getProducts(event.selected + 1, valueSort, '').then(setProducts)
+        setNumberPage( event.selected + 1)
     };
 
     return (
@@ -39,7 +41,7 @@ export default function HomeContent() {
 
                     <ul className="category-list">
                         <li className="category-item ">
-                            <a onClick={() => getProducts(1, 'category=Giày sneaker').then(setProducts)} className="category-item__link">Giày sneaker</a>
+                            <a onClick={() => setCategory('Giày sneaker')} className="category-item__link">Giày sneaker</a>
                         </li>
                         <li className="category-item">
                             <a href="" className="category-item__link">Giày chelsea boot</a>
@@ -139,7 +141,7 @@ export default function HomeContent() {
 
                                 </a>
                                 :
-                                <a onClick={() => getProducts(products.page - 1, '').then(setProducts)} className="home-filter__page-btn">
+                                <a onClick={() => setNumberPage(products.page - 1)} className="home-filter__page-btn">
                                     <i className="home-filter__page-icon fa-solid fa-chevron-left"></i>
 
                                 </a>}
@@ -149,7 +151,7 @@ export default function HomeContent() {
 
                                 </a>
                                 :
-                                <a onClick={() => getProducts(products.page + 1, '').then(setProducts)} className="home-filter__page-btn">
+                                <a onClick={() => setNumberPage(products.page + 1)} className="home-filter__page-btn">
                                     <i className="home-filter__page-icon fa-solid fa-chevron-right"></i>
 
                                 </a>}
