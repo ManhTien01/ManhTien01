@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-
-
 import { cart, clearCart } from "cart/cart";
-import { currency } from "home/products";
+import { numberWithCommas } from "home/products";
 
 
 export default function CartContent() {
@@ -25,7 +23,7 @@ export default function CartContent() {
                                         {item.name}
                                     </h5>
                                     <div className="header__cart-item-price-wrap">
-                                        <span className="header__cart-item-price">{currency.format(item.quantity * item.price_new)}</span>
+                                        <span className="header__cart-item-price">{numberWithCommas(Math.round(item.quantity * item.price_new))}</span>
                                         <span className="header__cart-item-multiply">x</span>
                                         <span className="header__cart-item-qnt">{item.quantity}</span>
 

@@ -21,6 +21,8 @@ export default ({ id }) => {
 
                 Add To Cart
             </div>
+            <div className="btn-df btn-cart-buy">Mua ngay</div>
+
         </Show>
     )
 }

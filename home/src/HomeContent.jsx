@@ -1,20 +1,35 @@
-import React, { useState, useEffect } from "react";
-import {Link} from "react-router-dom"
-import {getProducts,sortProductByAscPrice,sortProductByDescPrice,sortProductBySold,sortProductByTime } from "./products";
-import {useLoggerIn} from "cart/cart"
+import * as React from "react";
+import { Link, useSearchParams } from "react-router-dom"
+import { numberWithCommas, getProducts } from "./products";
+import ReactPaginate from 'react-paginate';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
+
 
 export default function HomeContent() {
-    const LoggerIn = useLoggerIn()
-    const [products, setProducts] = useState([])
-    const [products_sort_ascprice, setSortProductByAscPrice] = useState([])
-    const [products_sort_descprice, setSortProductByDescPrice] = useState([])
-    const [products_sort_sold, setSortProductBySold] = useState([])
-    const [products_sort_time, setSortProductByTime] = useState([])
+    const [products, setProducts] = React.useState([])
+    const [value, setValue] = React.useState('two');
+    const [valueSort, setValueSort] = React.useState('')
+    const [searchParams, setSearchParams] = useSearchParams();
 
-    useEffect(() => {
-        getProducts().then(setProducts)
-        
-    }, [])
+    React.useEffect(() => {
+        if (searchParams.get('s') !== null) { getProducts(1, valueSort, searchParams.get('s')).then(setProducts) }
+        else {
+            getProducts(1, valueSort, '').then(setProducts)
+        }
+    }, [valueSort])
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
+    if (products.data === undefined && products.page === undefined && products.last_page === undefined && products.total === undefined) {
+        return null
+    }
+
+    const handlePageClick = (event) => {
+        getProducts(event.selected + 1, valueSort, '').then(setProducts)
+    };
 
     return (
         <div className="row-df sm-gutter content">
@@ -24,10 +39,10 @@ export default function HomeContent() {
 
                     <ul className="category-list">
                         <li className="category-item ">
-                            <a href="" className="category-item__link">Giày Sneaker</a>
+                            <a onClick={() => getProducts(1, 'category=Giày sneaker').then(setProducts)} className="category-item__link">Giày sneaker</a>
                         </li>
                         <li className="category-item">
-                            <a href="" className="category-item__link">Giày Chelsea Boot</a>
+                            <a href="" className="category-item__link">Giày chelsea boot</a>
                         </li>
                         <li className="category-item">
                             <a href="" className="category-item__link">Giày thể thao</a>
@@ -38,9 +53,57 @@ export default function HomeContent() {
             <div className="col-df l-10 m-df-12 c-12">
                 <div className="home-filter hide-on-mobile-tablet">
                     <span className="home-filter__lable">Sắp xếp theo</span>
-                    <button className="home-fillter-btn btn-df" >Phổ biến</button>
-                    <button className="home-fillter-btn btn-df btn-df--primery"onClick={sortProductByTime}>Mới nhất</button>
-                    <button className="home-fillter-btn btn-df"  onClick={sortProductBySold}>Bán chạy</button>
+                    <Box >
+                        <Tabs
+                            value={value}
+                            onChange={handleChange}
+                            TabIndicatorProps={{
+                                sx: {
+                                    height: 0,
+                                }
+                            }}
+                            sx={{
+                                "& button":
+                                {
+                                    borderRadius: '2px',
+                                    backgroundColor: '#fff',
+                                    color: '#000',
+                                    marginRight: '12px',
+                                    fontSize: '1.2rem',
+                                    maxHeight: 34,
+                                    marginTop: '7px',
+                                    minHeight: 0,
+
+                                },
+                                "& button.Mui-selected":
+                                {
+                                    backgroundColor: '#EE4D2D',
+                                    color: '#fff',
+                                },
+
+                            }}
+                        >
+                            <Tab onClick={() => {
+                                setValueSort('sort_popularity=desc')
+
+                            }}
+                                value="one"
+                                label="Phổ biến"
+                            />
+                            <Tab
+                                onClick={
+                                    () => {
+                                        setValueSort('sort_time=desc')
+                                    }
+                                }
+                                value="two"
+                                label="Mới nhất" />
+                            <Tab onClick={() => {
+                                setValueSort('sort_sold=desc')
+                                // getProducts(1, valueSort).then(setProducts)
+                            }} value="three" label="Bán chạy" />
+                        </Tabs>
+                    </Box>
 
                     <div className="select-input">
                         <span className="select-input__label">Giá
@@ -48,12 +111,15 @@ export default function HomeContent() {
                         <i className="select-input__icon fa-solid fa-chevron-down"></i>
                         <ul className="select-input__list">
                             <li className="select-input__icon">
-                                <span onClick={sortProductByAscPrice} className="select-input__link">
+                                <span onClick={() =>
+
+                                    setValueSort('sort_price=asc')
+                                } className="select-input__link">
                                     Giá: thấp đến cao
                                 </span>
                             </li>
                             <li className="select-input__icon">
-                                <span onClick={sortProductByDescPrice} className="select-input__link">
+                                <span onClick={() => setValueSort('sort_price=desc')} className="select-input__link">
                                     Giá: cao đến thấp
                                 </span>
                             </li>
@@ -62,19 +128,31 @@ export default function HomeContent() {
 
                     <div className="home-filter__page">
                         <span className="home-filter__page-num">
-                            <span className="home-filter__page-current">1</span>/14
+                            <span className="home-filter__page-current">{products.page}</span>/{products.last_page}
 
 
                         </span>
                         <div className="home-filter__page-control">
-                            <a href="" className="home-filter__page-btn home-filter__page-btn--disabled">
-                                <i className="home-filter__page-icon fa-solid fa-chevron-left"></i>
+                            {products.page === 1 ?
+                                <a aria-disabled className="home-filter__page-btn home-filter__page-btn--disabled">
+                                    <i className="home-filter__page-icon fa-solid fa-chevron-left"></i>
 
-                            </a>
-                            <a href="" className="home-filter__page-btn">
-                                <i className="home-filter__page-icon fa-solid fa-chevron-right"></i>
+                                </a>
+                                :
+                                <a onClick={() => getProducts(products.page - 1, '').then(setProducts)} className="home-filter__page-btn">
+                                    <i className="home-filter__page-icon fa-solid fa-chevron-left"></i>
 
-                            </a>
+                                </a>}
+                            {products.page === products.last_page ?
+                                <a aria-disabled className="home-filter__page-btn home-filter__page-btn--disabled">
+                                    <i className="home-filter__page-icon fa-solid fa-chevron-right"></i>
+
+                                </a>
+                                :
+                                <a onClick={() => getProducts(products.page + 1, '').then(setProducts)} className="home-filter__page-btn">
+                                    <i className="home-filter__page-icon fa-solid fa-chevron-right"></i>
+
+                                </a>}
                         </div>
                     </div>
                 </div>
@@ -139,20 +217,28 @@ export default function HomeContent() {
 
                 </div>
 
+
                 <div className="row-df sm-gutter">
-                    {products.map((product) => (
-                        <div className="col-df l-2-4 m-df-4 c-6 home-product-item-wrapper" key={product.slug}>
+                    {products.data.map((product) => (
+                        <div className="col-df l-2-4 m-df-4 c-6 home-product-item-wrapper" key={product._id}>
                             <div className="home-product-item">
                                 <Link to={`products/${product._id}`}>
-                                    <div className="home-product-item__img" >
 
-                                        <img src={product.avatar} />
-                                    </div>
+
+                                    <img className="home-product-item__img" src={product.avatar} />
+
                                     <h4 className="home-product-item__name">{product.name}</h4>
-                                    <div className="home-product-item__price">
-                                        <span className="home-product-item__price-old">{product.price}đ</span>
-                                        <span className="home-product-item__price-new">{product.price - product.price* product.discount / 100}đ</span>
-                                    </div>
+                                    {product.discount !== 0 ?
+                                        <div className="home-product-item__price">
+                                            <span className="home-product-item__price-old">{numberWithCommas(product.price)}đ</span>
+                                            <span className="home-product-item__price-new">{numberWithCommas(Math.round(product.price - product.price * product.discount / 100))}đ</span>
+                                        </div>
+                                        :
+                                        <div className="home-product-item__price">
+                                            <span className="home-product-item__price-new">{numberWithCommas(Math.round(product.price - product.price * product.discount / 100))}đ</span>
+                                        </div>
+                                    }
+
                                     <div className="home-product-item__action">
                                         <span className="home-product-item__like home-product-item__liked">
                                             <i className="home-product-item__like-icon-empty fa-regular fa-heart"></i>
@@ -176,12 +262,21 @@ export default function HomeContent() {
                                         <i className="fa-solid fa-check"></i>
                                         <span>Yêu thích</span>
                                     </div>
-                                    <div className="home-product-item__sale-off">
-                                        <span className="home-product-item__sale-off-percent">{product.discount}%</span>
-                                        <span className="home-product-item__sale-off-laybel">GIẢM</span>
-                                    </div>
+                                    {
+                                        product.discount !== 0
+
+                                        &&
+
+                                        <div className="home-product-item__sale-off">
+                                            <span className="home-product-item__sale-off-percent">{product.discount}%</span>
+                                            <span className="home-product-item__sale-off-laybel">GIẢM</span>
+                                        </div>
+
+
+
+                                    }
                                 </Link>
-                                    
+
                             </div>
 
 
@@ -189,276 +284,31 @@ export default function HomeContent() {
                     ))}
 
                 </div>
+                <ReactPaginate
+                    previousLabel={'<<'}
+                    nextLabel={'>>'}
+                    breakLabel={'...'}
+                    pageCount={products.last_page}
+                    forcePage={products.page - 1}
+                    onPageChange={handlePageClick}
+                    renderOnZeroPageCount={null}
+                    containerClassName={"pagination home-product__pagination"}
+                    pageClassName={"pagination-item"}
+                    pageLinkClassName={"pagination-item__link"}
+                    breakClassName={"pagination-item"}
+                    breakLinkClassName={"pagination-item__link"}
+                    activeClassName={'pagination-item--active'}
+                    previousClassName={"pagination-item"}
+                    previousLinkClassName={"pagination-item__link"}
+                    nextClassName={"pagination-item"}
+                    nextLinkClassName={"pagination-item__link"}
 
-                <ul className="pagination home-product__pagination">
-                    <li className="pagination-item">
-                        <a href="" className="pagination-item__link">
-                            <i className="pagination-item__icon fa-solid fa-chevron-left"></i>
-                        </a>
-                    </li>
+                />
 
-                    <li className="pagination-item pagination-item--active">
-                        <a href="" className="pagination-item__link">1</a>
-                    </li>
-
-                    <li className="pagination-item">
-                        <a href="" className="pagination-item__link">2</a>
-                    </li>
-
-                    <li className="pagination-item">
-                        <a href="" className="pagination-item__link">3</a>
-                    </li>
-
-                    <li className="pagination-item">
-                        <a href="" className="pagination-item__link">4</a>
-                    </li>
-
-                    <li className="pagination-item">
-                        <a href="" className="pagination-item__link">5</a>
-                    </li>
-
-                    <li className="pagination-item">
-                        <a href="" className="pagination-item__link">...</a>
-                    </li>
-                    <li className="pagination-item">
-                        <a href="" className="pagination-item__link">14</a>
-                    </li>
-
-                    <li className="pagination-item">
-                        <a href="" className="pagination-item__link">
-                            <i className="pagination-item__icon fa-solid fa-chevron-right"></i>
-                        </a>
-                    </li>
-                </ul>
             </div>
         </div>
 
 
 
-    ) 
-    // useEffect(() => {
-    //     sortProductByAscPrice().then(setSortProductByAscPrice)
-        
-    // }, [])
-
-    // return (
-    //     <div className="row-df sm-gutter content">
-    //         <div className="col-df l-2 m-0 c-0">
-    //             <nav className="category">
-    //                 <h3 className="category__heading">Danh mục </h3>
-
-    //                 <ul className="category-list">
-    //                     <li className="category-item ">
-    //                         <a href="" className="category-item__link">Giày Sneaker</a>
-    //                     </li>
-    //                     <li className="category-item">
-    //                         <a href="" className="category-item__link">Giày Chelsea Boot</a>
-    //                     </li>
-    //                     <li className="category-item">
-    //                         <a href="" className="category-item__link">Giày thể thao</a>
-    //                     </li>
-    //                 </ul>
-    //             </nav>
-    //         </div>
-    //         <div className="col-df l-10 m-df-12 c-12">
-    //             <div className="home-filter hide-on-mobile-tablet">
-    //                 <span className="home-filter__lable">Sắp xếp theo</span>
-    //                 <button className="home-fillter-btn btn-df" >Phổ biến</button>
-    //                 <button className="home-fillter-btn btn-df btn-df--primery"onClick={sortProductByTime}>Mới nhất</button>
-    //                 <button className="home-fillter-btn btn-df"  onClick={sortProductBySold}>Bán chạy</button>
-
-    //                 <div className="select-input">
-    //                     <span className="select-input__label">Giá
-    //                     </span>
-    //                     <i className="select-input__icon fa-solid fa-chevron-down"></i>
-    //                     <ul className="select-input__list">
-    //                         <li className="select-input__icon">
-    //                             <a onClick={sortProductByAscPrice} className="select-input__link">
-    //                                 Giá: thấp đến cao
-    //                             </a>
-    //                         </li>
-    //                         <li className="select-input__icon">
-    //                             <a onClick={sortProductByDescPrice} className="select-input__link">
-    //                                 Giá: cao đến thấp
-    //                             </a>
-    //                         </li>
-    //                     </ul>
-    //                 </div>
-
-    //                 <div className="home-filter__page">
-    //                     <span className="home-filter__page-num">
-    //                         <span className="home-filter__page-current">1</span>/14
-
-
-    //                     </span>
-    //                     <div className="home-filter__page-control">
-    //                         <a href="" className="home-filter__page-btn home-filter__page-btn--disabled">
-    //                             <i className="home-filter__page-icon fa-solid fa-chevron-left"></i>
-
-    //                         </a>
-    //                         <a href="" className="home-filter__page-btn">
-    //                             <i className="home-filter__page-icon fa-solid fa-chevron-right"></i>
-
-    //                         </a>
-    //                     </div>
-    //                 </div>
-    //             </div>
-
-    //             <div className="nav moblie-category">
-    //                 <ul className="moblie-category__list">
-    //                     <li className="moblie-category__item">
-    //                         <a href="" className="moblie-category__link">Sneaker & boot abc</a>
-    //                     </li>
-    //                     <li className="moblie-category__item">
-    //                         <a href="" className="moblie-category__link">Sneaker</a>
-    //                     </li>
-    //                     <li className="moblie-category__item">
-    //                         <a href="" className="moblie-category__link">Sneaker</a>
-    //                     </li>
-    //                     <li className="moblie-category__item">
-    //                         <a href="" className="moblie-category__link">Sneaker</a>
-    //                     </li>
-    //                     <li className="moblie-category__item">
-    //                         <a href="" className="moblie-category__link">Sneaker</a>
-    //                     </li>
-    //                     <li className="moblie-category__item">
-    //                         <a href="" className="moblie-category__link">Sneaker</a>
-    //                     </li>
-    //                     <li className="moblie-category__item">
-    //                         <a href="" className="moblie-category__link">Sneaker</a>
-    //                     </li>
-    //                     <li className="moblie-category__item">
-    //                         <a href="" className="moblie-category__link">Sneaker</a>
-    //                     </li>
-    //                     <li className="moblie-category__item">
-    //                         <a href="" className="moblie-category__link">Sneaker</a>
-    //                     </li>
-    //                     <li className="moblie-category__item">
-    //                         <a href="" className="moblie-category__link">Sneaker</a>
-    //                     </li>
-    //                     <li className="moblie-category__item">
-    //                         <a href="" className="moblie-category__link">Sneaker</a>
-    //                     </li>
-    //                     <li className="moblie-category__item">
-    //                         <a href="" className="moblie-category__link">Sneaker</a>
-    //                     </li>
-    //                     <li className="moblie-category__item">
-    //                         <a href="" className="moblie-category__link">Sneaker</a>
-    //                     </li>
-    //                     <li className="moblie-category__item">
-    //                         <a href="" className="moblie-category__link">Sneaker</a>
-    //                     </li>
-    //                     <li className="moblie-category__item">
-    //                         <a href="" className="moblie-category__link">Sneaker</a>
-    //                     </li>
-    //                     <li className="moblie-category__item">
-    //                         <a href="" className="moblie-category__link">Sneaker</a>
-    //                     </li>
-    //                     <li className="moblie-category__item">
-    //                         <a href="" className="moblie-category__link">Sneaker</a>
-    //                     </li>
-    //                     <li className="moblie-category__item">
-    //                         <a href="" className="moblie-category__link">Sneaker</a>
-    //                     </li>
-    //                 </ul>
-
-    //             </div>
-
-    //             <div className="row-df sm-gutter">
-    //                 {products_sort_ascprice.map((product) => (
-    //                     <div className="col-df l-2-4 m-df-4 c-6 home-product-item-wrapper" key={product.slug}>
-    //                         <div className="home-product-item">
-    //                             <Link to={`products/${product._id}`}>
-    //                                 <div className="home-product-item__img" >
-
-    //                                     <img src={product.avatar} />
-    //                                 </div>
-    //                                 <h4 className="home-product-item__name">{product.name}</h4>
-    //                                 <div className="home-product-item__price">
-    //                                     <span className="home-product-item__price-old">{product.price}đ</span>
-    //                                     <span className="home-product-item__price-new">{product.price - product.price* product.discount / 100}đ</span>
-    //                                 </div>
-    //                                 <div className="home-product-item__action">
-    //                                     <span className="home-product-item__like home-product-item__liked">
-    //                                         <i className="home-product-item__like-icon-empty fa-regular fa-heart"></i>
-    //                                         <i className="home-product-item__like-icon-fill fa-solid fa-heart"></i>
-    //                                     </span>
-    //                                     <div className="home-product-item__ratting">
-    //                                         <i className="homer-product-item__star--gold fa-solid fa-star"></i>
-    //                                         <i className="homer-product-item__star--gold fa-solid fa-star"></i>
-    //                                         <i className="homer-product-item__star--gold fa-solid fa-star"></i>
-    //                                         <i className="homer-product-item__star--gold fa-solid fa-star"></i>
-    //                                         <i className="fa-solid fa-star"></i>
-    //                                     </div>
-    //                                     <span className="home-product-item__sold">{product.sold} Đã bán</span>
-    //                                 </div>
-    //                                 <div className="home-product-item__origin">
-    //                                     <span className="home-product-item__brand">{product.brand}</span>
-    //                                     <span className="home-product-item__origin-name">{product.origin}</span>
-
-    //                                 </div>
-    //                                 <div className="home-product-item__favorite">
-    //                                     <i className="fa-solid fa-check"></i>
-    //                                     <span>Yêu thích</span>
-    //                                 </div>
-    //                                 <div className="home-product-item__sale-off">
-    //                                     <span className="home-product-item__sale-off-percent">{product.discount}%</span>
-    //                                     <span className="home-product-item__sale-off-laybel">GIẢM</span>
-    //                                 </div>
-    //                             </Link>
-                                    
-    //                         </div>
-
-
-    //                     </div>
-    //                 ))}
-
-    //             </div>
-
-    //             <ul className="pagination home-product__pagination">
-    //                 <li className="pagination-item">
-    //                     <a href="" className="pagination-item__link">
-    //                         <i className="pagination-item__icon fa-solid fa-chevron-left"></i>
-    //                     </a>
-    //                 </li>
-
-    //                 <li className="pagination-item pagination-item--active">
-    //                     <a href="" className="pagination-item__link">1</a>
-    //                 </li>
-
-    //                 <li className="pagination-item">
-    //                     <a href="" className="pagination-item__link">2</a>
-    //                 </li>
-
-    //                 <li className="pagination-item">
-    //                     <a href="" className="pagination-item__link">3</a>
-    //                 </li>
-
-    //                 <li className="pagination-item">
-    //                     <a href="" className="pagination-item__link">4</a>
-    //                 </li>
-
-    //                 <li className="pagination-item">
-    //                     <a href="" className="pagination-item__link">5</a>
-    //                 </li>
-
-    //                 <li className="pagination-item">
-    //                     <a href="" className="pagination-item__link">...</a>
-    //                 </li>
-    //                 <li className="pagination-item">
-    //                     <a href="" className="pagination-item__link">14</a>
-    //                 </li>
-
-    //                 <li className="pagination-item">
-    //                     <a href="" className="pagination-item__link">
-    //                         <i className="pagination-item__icon fa-solid fa-chevron-right"></i>
-    //                     </a>
-    //                 </li>
-    //             </ul>
-    //         </div>
-    //     </div>
-
-
-
-    // )
+    )
 }

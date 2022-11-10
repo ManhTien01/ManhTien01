@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from "react-router-dom";
-import { currency, getProductById } from 'home/products';
+import { numberWithCommas, getProductById } from 'home/products';
 import placeAddToCart from 'addtocart/placeAddToCart';
 
 export default function PDPContent() {
@@ -31,12 +31,11 @@ export default function PDPContent() {
   }
   return (
     <div>
-      <div className="grid__full-width product-direction">
+      <div className="grid__full-width c-0 product-direction">
         <a href="#" className="button_link">Shoes </a>
-        <div className="product-direction-icon"><i className="fa-solid fa-angle-right"></i></div>
-        <a href="" className="button_link">{product.category}</a>
-        <div className="product-direction-icon"><i className="fa-solid fa-angle-right"></i></div>
-        <a href="" className="button_link">{product.subcategory}</a>
+
+        {product.category && <div className="product-direction-icon"><i className="fa-solid fa-angle-right"></i><a href="" className="button_link"> {product.category}</a></div>}
+        {product.subcategory && <div className="product-direction-icon"><i className="fa-solid fa-angle-right"></i><a href="" className="button_link">{product.subcategory}</a></div>}
         <div className="product-direction-icon"><i className="fa-solid fa-angle-right"></i></div>
         <p>{product.name}</p>
       </div>
@@ -47,22 +46,18 @@ export default function PDPContent() {
               <img className='products-details__img-lg' src={product.avatar} alt={product.name} />
             </div>
           </div>
-          <div className="flex">
-            <div className="col-df l-2-4 products-details__img-sm">
-              <img src={product.avatar} alt={product.name} />
-            </div>
-            <div className="col-df l-2-4 products-details__img-sm">
-              <img src={product.avatar} alt={product.name} />
-            </div>
-            <div className="col-df l-2-4 products-details__img-sm">
-              <img src={product.avatar} alt={product.name} />
-            </div>
-            <div className="col-df l-2-4 products-details__img-sm">
-              <img src={product.avatar} alt={product.name} />
-            </div>
-            <div className="col-df l-2-4 products-details__img-sm">
-              <img src={product.avatar} alt={product.name} />
-            </div>
+          <div className='flex products-details__img-sm-wrap'>
+
+            {product.images &&
+              product.images.map(e => {
+                return (
+
+                  <div className="col-df l-2-4 products-details__img-sm" key={e}>
+                    <img src={e} alt={e} />
+                  </div>
+                )
+              })
+            }
           </div>
         </div>
         <div className="col-df l-7 m-df-12 c-12 products-details__body">
@@ -94,12 +89,18 @@ export default function PDPContent() {
               </ul>
             </div>
           </div>
-          <div className="grid__full-width products-details__body-price">
-            <span className="products-details__body-price-item product-old-price">{product.price}đ</span>
-            <span className="products-details__body-price-item product-new-price">{product.price - product.price * product.discount / 100}đ</span>
-            <span className="products-details__body-price-item product-discount-price">{product.discount}%
-              GIẢM</span>
-          </div>
+          {product.discount !== 0 ?
+            <div className="grid__full-width products-details__body-price">
+              <span className="products-details__body-price-item product-old-price">{numberWithCommas(product.price)}đ</span>
+              <span className="products-details__body-price-item product-new-price">{numberWithCommas(Math.round(product.price - product.price * product.discount / 100))}đ</span>
+              <span className="products-details__body-price-item product-discount-price">{product.discount}%
+                GIẢM</span>
+            </div>
+            :
+            <div className="grid__full-width products-details__body-price">
+              <span className="products-details__body-price-item product-new-price">{numberWithCommas(Math.round(product.price - product.price * product.discount / 100))}đ</span>
+            </div>
+          }
           <ul className="mt-4 products-details__option">
             <li className="products-details__body-option products-details__body-discount">
               <span className="products-details__option-item">Mã giảm giá của shop</span>
@@ -181,13 +182,12 @@ export default function PDPContent() {
           <div className='flex mt-8'>
             <div ref={addToCart} >
             </div>
-            <div className="btn-df btn-cart-buy">Mua ngay</div>
           </div>
         </div>
       </div>
       <div className="row-df voteproduct">
-        
-        <div className="lg-gutters describe-product">
+
+        <div className="lg-gutters l-12 describe-product">
           <div className="describe">
             <div className="describe-head">
               <h2 className="h2_detail">CHI TIẾT SẢN PHẨM</h2>
@@ -199,94 +199,62 @@ export default function PDPContent() {
                 <label className="_27NlLf">Danh Mục</label>
                 <div className="flex items-center _3AZ0Vk">
                   <a className="CyVtI7 _2yC5g9" href="/">Shopee</a>
-                  {/* <svg enable-background="new 0 0 11 11" viewBox="0 0 11 11" x="0" y="0"
-                            className="shopee-svg-icon _2ON4et icon-arrow-right">
-                            <path
-                                d="m2.5 11c .1 0 .2 0 .3-.1l6-5c .1-.1.2-.3.2-.4s-.1-.3-.2-.4l-6-5c-.2-.2-.5-.1-.7.1s-.1.5.1.7l5.5 4.6-5.5 4.6c-.2.2-.2.5-.1.7.1.1.3.2.4.2z">
-                            </path>
-                        </svg>
-                         */}
-                  <i className="fa-solid fa-angle-right source-link_detail-product-icon"></i>
-                  <a className="CyVtI7 _2yC5g9" href="/Giày-Dép-Nam-cat.11035801">Giày Dép Nam</a>
-                  {/* <svg
-                            enable-background="new 0 0 11 11" viewBox="0 0 11 11" x="0" y="0"
-                            className="shopee-svg-icon _2ON4et icon-arrow-right">
-                            <path
-                                d="m2.5 11c .1 0 .2 0 .3-.1l6-5c .1-.1.2-.3.2-.4s-.1-.3-.2-.4l-6-5c-.2-.2-.5-.1-.7.1s-.1.5.1.7l5.5 4.6-5.5 4.6c-.2.2-.2.5-.1.7.1.1.3.2.4.2z">
-                            </path>
-                        </svg> */}
-                  <i className="fa-solid fa-angle-right source-link_detail-product-icon"></i>
-                  <a className="CyVtI7 _2yC5g9" href="/Giày-Thể-Thao-Sneakers-cat.11035801.11035807">Giày Thể Thao/
-                    Sneakers</a>
+                  {product.category && <div className="product-direction-icon"><i className="fa-solid fa-angle-right"></i><a href="" className="button_link"> {product.category}</a></div>}
+                  {product.subcategory && <div className="product-direction-icon"><i className="fa-solid fa-angle-right"></i><a href="" className="button_link"> {product.subcategory}</a></div>}
                 </div>
               </div>
               <div className="box-describe">
                 <label className="lable-describe">Thương hiệu </label>
-                <a className="material" href="/search?brands=2561477">FILA</a>
+                <a className="material" href="/search?brands=2561477">{product.brand}</a>
               </div>
-              <div className="box-describe">
-                <label className="lable-describe">Giày cao gót </label>
-                <div className="material">Trung Bình</div>
-              </div>
+
               <div className="box-describe">
                 <label className="lable-describe">Loại Khóa</label>
-                <div className="material">Khóa dây</div>
+                <div className="material">{product.type_lock}</div>
               </div>
               <div className="box-describe">
-                <label className="lable-describe">Loại Khóa </label>
-                <div className="material">Khóa dây</div>
+                <label className="lable-describe">Chiều rộng phù hợp </label>
+                {product.suitable_width !== false ? <div className="material">Không</div> : <div className="material">Có</div>}
+
               </div>
               <div className="box-describe">
                 <label className="lable-describe">Chất liệu </label>
-                <div className="material">Da, Cao su</div>
+                <div className="material">{product.material}</div>
               </div>
               <div className="box-describe">
                 <label className="lable-describe">Xuất xứ </label>
-                <div className="material">Hàn Quốc</div>
+                <div className="material">{product.origin}</div>
               </div>
-              <div className="box-describe">
-                <label className="lable-describe">Dịp </label>
-                <div className="material">Hằng Ngày</div>
-              </div>
+
               <div className="box-describe">
                 <label className="lable-describe">Chiều cao cổ giày </label>
                 <div className="material">Cổ thấp</div>
               </div>
               <div className="box-describe">
                 <label className="lable-describe">Kho hàng </label>
-                <div className="material">81</div>
+                <div className="material">{product.amount}</div>
               </div>
-              <div className="box-describe">
-                <label className="lable-describe">Gửi từ </label>
-                <div className="material">Hà Nội</div>
-              </div>
+
             </div>
           </div>
-          <div className="paint-product">
+          <div className="l-12 paint-product">
             <div className="paint-head">
               <h2>MÔ TẢ SẢN PHẨM</h2>
             </div>
             <div className="paint-content">
               <span>
-                Có gì ở đôi Fila sandblast low cực xinh này ạ???
-                Được làm từ chất liệu da tổng hợp giúp sản phẩm có độ bền cao và nâng niu từng bước chân của bạn.
-                Kiểu dáng giày năng động với thiết kế cổ thấp, thắt dây khỏe khoắn, màu sắc hợp thời trang. Đế cao
-                su chắc chắn có khả năng ma sát tốt, chống trơn trượt, có thể di chuyển trên nhiều địa hình. Ngoài
-                ra bạn có thể dễ dàng kết hợp giày thể thao FILA với nhiều phụ kiện và trang phục khác nhau để tạo
-                nên một sét đồ thật xinh
+                {product.description}
+              </span>
+            </div>
+          </div>
 
-                Tận 3 màu cho chị em lận ạ
-
-                ✨ HÀNG CHUẨN AUTH CHÍNH HÃNG 100%
-                - ORDER WEB HÀN/NHẬT// US UK
-                - FULL BOX, cung cấp bill đầy đủ nếu cần
-                - Ship toàn quốc
-                Một đôi giày thể thao giúp các nàng tự tin, phong cách và cá tính hơn với những bộ cánh nâng động.
-                Đồng thời, khi mang giày thể thao giúp bảo vệ đôi chân hoàn hảo tránh được những chấn thương bất ngờ
-                gặp phải khi di chuyển và bảo vệ da tránh được những tác hại từ tia UV.
-                ✨Một số sản phẩm có chữ "Made in China" hoặc "Made in Vietnam",... do xưởng sản xuất ở nước khác
-                nhau như Trung Quốc, Việt Nam,...
-                ✨ Liên hệ shop để order size khác
+          <div className="paint-product">
+            <div className="paint-head">
+              <h2>GÓP Ý, ĐÁNH GIÁ SẢN PHẨM</h2>
+            </div>
+            <div className="paint-content">
+              <span>
+                Chức năng đang cập nhật
               </span>
             </div>
           </div>

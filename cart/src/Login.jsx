@@ -50,12 +50,11 @@ export default function Login() {
                                         <div className="auth-form__header">
                                             <h3 className="auth-form__heading">Đăng nhập
                                             </h3>
-                                            <a href="/api/users/createUser"><span className="auth-form__switch-btn"
+                                            <a href=""><span className="auth-form__switch-btn"
                                                 id="auth-form__switch-btn-df-login">Đăng ký</span></a>
                                         </div>
 
                                         <div className="auth-form__form">
-
 
                                             <div className="auth-form__group">
                                                 <input id="email" name="email" type="text" className="auth-form__input"
@@ -73,8 +72,7 @@ export default function Login() {
                                         </div>
                                         <div className="auth-form__controls">
 
-                                            <button className="auth-form__register-btn disabled" onClick={() => login(username, password)}>ĐĂNG NHẬP</button>
-
+                                            <button className="auth-form__register-btn" onClick={() => login(username, password)}>ĐĂNG NHẬP</button>
 
                                         </div>
                                         <div className="auth-form__aside">

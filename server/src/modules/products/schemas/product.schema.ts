@@ -14,7 +14,21 @@ export class Product {
   @Prop()
   origin: string;
   @Prop()
+  material: string;
+  @Prop()
   brand: string;
+  @Prop()
+  suitable_width: boolean;
+  @Prop()
+  type_lock: string;
+  @Prop()
+  type_skin: string;
+  @Prop()
+  out_skin: string;
+  @Prop()
+  shoes_height: string;
+  @Prop()
+  heel_height: string;
   @Prop({default: 0, require: true })
   price: number;
   @Prop({default: 0, require: true })
@@ -24,11 +38,17 @@ export class Product {
   @Prop([Number])
   size: number[];
   @Prop({default: false })
-  status: boolean;
+  status: Boolean;
   @Prop(Number)
   sold: number;
   @Prop(Number)
   amount: number;
+  @Prop()
+  category: string;
+  @Prop()
+  subcategory: string;
+  @Prop([String])
+  images: string[];
 
   @Prop({slug: 'name', unique: true})
   slug: string;

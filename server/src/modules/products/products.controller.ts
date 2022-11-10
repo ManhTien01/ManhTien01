@@ -20,11 +20,27 @@ export class ProductsController {
   async datasort(@Req() req: Request) {
     let options = {};
 
+    if (req.query.status) {
+      options = {
+        $or: [
+          { status: req.query.status},
+          
+        ]
+      }
+    }
+
     if (req.query.s) {
       options = {
         $or: [
           { name: new RegExp(req.query.s.toString(), 'i') },
           { description: new RegExp(req.query.s.toString(), 'i') },
+        ]
+      }
+    }
+    if (req.query.category) {
+      options = {
+        $or: [
+          { category: new RegExp(req.query.category.toString(), 'i') },
         ]
       }
     }
@@ -47,19 +63,25 @@ export class ProductsController {
         createdAt: req.query.sort_time as any,
       })
     }
+    if (req.query.sort_popularity) {
+      query.sort({
+        amount: req.query.sort_popularity as any,
+      })
+    }
 
     const page: number = parseInt(req.query.page as any) || 1
-    const limit = 12;
+    const limit = 10;
     const total = await this.productsService.count(options)
     const data = await query.skip((page - 1) * limit).limit(limit).exec()
+    
 
+    // return query
 
     return {
       data,
       total,
       page,
-      last_page: Math.ceil(total / limit),
-
+      last_page: Math.ceil(total / limit)
     }
   }
 
@@ -68,6 +90,6 @@ export class ProductsController {
   async findOne(@Param('id') id: string): Promise<Product> {
     return this.productsService.findOne(id);
   }
-
+  
   
 }

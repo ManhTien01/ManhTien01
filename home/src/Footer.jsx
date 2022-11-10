@@ -73,7 +73,7 @@ export default function Footer() {
                             </li>
                         </ul>
                     </div>
-                    <div className="col-df l-2-4 c-12">
+                    <div className="col-df l-2-4 m-df-4 c-12">
                         <h3 className="footer-heading">Vào cửa hàng trên ứng dụng</h3>
                         <div className="footer__download">
                             <img src="https://www.qrcode-gen.com/images/qrcode-default.png" alt="Download QR" className="footer__download-qr" />

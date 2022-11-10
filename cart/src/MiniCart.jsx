@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom"
 import { cart, clearCart } from './cart'
-import { currency } from 'home/products'
+import { numberWithCommas } from 'home/products'
 
 export default function MiniCart() {
     const [items, setItems] = useState(undefined)
@@ -62,7 +62,7 @@ export default function MiniCart() {
                                                             {item.name}
                                                         </h5>
                                                         <div className="header__cart-item-price-wrap">
-                                                            <span className="header__cart-item-price">{currency.format(item.quantity * item.price_new)}</span>
+                                                            <span className="header__cart-item-price">{numberWithCommas(Math.round(item.quantity * item.price_new))}</span>
                                                             <span className="header__cart-item-multiply">x</span>
                                                             <span className="header__cart-item-qnt">{item.quantity}</span>
 
