@@ -3,6 +3,7 @@ import MiniCart from "cart/MiniCart"
 import Login from "cart/Login"
 import Register from "cart/Register";
 import Search from "./Search";
+import Suggestion from "./Suggestion";
 
 
 export default function Header() {
@@ -34,7 +35,7 @@ export default function Header() {
 
                     </ul>
                     <ul className="navbar-list">
-                        <li className="navbar-item header__notify-items--has-notify">
+                        {/* <li className="navbar-item header__notify-items--has-notify">
                             <a href="" className="navbar-item__link header__notify-items--has-notify">
                                 <i className="navbar-item-icon fa-solid fa-bell "></i>
                                 Thông báo
@@ -80,14 +81,8 @@ export default function Header() {
                                     <a href="" className="header__noify-footer-btn">Xem tất cả</a>
                                 </footer>
                             </div>
-                        </li>
-                        <li className="navbar-item">
-                            <a href="" className="navbar-item__link">
-                                <i className="navbar-item-icon fa-solid fa-circle-info"></i>
-                                Trợ giúp
-
-                            </a>
-                        </li>
+                        </li> */}
+                        <Suggestion/>
 
                         <Register />
                         <Login />

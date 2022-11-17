@@ -16,14 +16,14 @@ export default function CartContent() {
                 {items.map((item) => (
                     <React.Fragment key={item.id}>
                         <li className="header__cart-item">
-                            <img src={item.image} alt={item.name} className="header__cart-img" />
+                            <img src={item.avatar} alt={item.name} className="header__cart-img" />
                             <div className="header__cart-item-infor">
                                 <div className="header__cart-item-head">
                                     <h5 className="header__cart-item-name">
                                         {item.name}
                                     </h5>
                                     <div className="header__cart-item-price-wrap">
-                                        <span className="header__cart-item-price">{numberWithCommas(Math.round(item.quantity * item.price_new))}</span>
+                                        <span className="header__cart-item-price">{numberWithCommas(Math.round(item.price - item.price * item.discount / 100))}</span>
                                         <span className="header__cart-item-multiply">x</span>
                                         <span className="header__cart-item-qnt">{item.quantity}</span>
 

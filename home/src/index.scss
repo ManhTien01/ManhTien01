@@ -1543,6 +1543,14 @@ i.home-product-item__like-icon-fill {
   padding-left: 0;
 }
 
+.no-product {
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
 /* footer    */
 
 .footer {
@@ -2166,4 +2174,8 @@ i.home-product-item__like-icon-fill {
 
 .paint-content {
   margin: 0 40px;
+}
+
+.form-message {
+  color: red;
 }

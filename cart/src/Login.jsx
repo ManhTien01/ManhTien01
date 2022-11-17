@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
 
-import {Link} from "react-router-dom"
-
+import { Link } from "react-router-dom"
+import { useForm } from 'react-hook-form';
 import { login, useLoggerIn } from './cart';
 
+
 export default function Login() {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
     const loggerIn = useLoggerIn();
     const [showLogin, setShowLogin] = useState(false);
 
-    const [username, setUsername] = useState("sally");
-    const [password, setPassword] = useState("123");
+    const [username, setUsername] = useState("");
+    // const [password, setPassword] = useState("123");
 
     if (loggerIn) return (
         <>
@@ -54,27 +60,47 @@ export default function Login() {
                                                 id="auth-form__switch-btn-df-login">Đăng ký</span></a>
                                         </div>
 
-                                        <div className="auth-form__form">
+                                        <form onSubmit={handleSubmit((data) => {
+                                            login(data.mail, data.password)
+                                            setUsername(data.mail)
+                                            })} className="auth-form__form">
 
                                             <div className="auth-form__group">
-                                                <input id="email" name="email" type="text" className="auth-form__input"
-                                                    placeholder="Email của bạn" value={username}
-                                                    onChange={(evt) => setUsername(evt.target.value)} />
-                                                <span className="form-message"></span>
+                                                <input
+                                                    {...register("mail", {
+                                                        required: "Bạn bắt buộc phải điền email",
+                                                        pattern:
+                                                            /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                                                    })}
+                                                    aria-invalid={errors.mail ? "true" : "false"}
+                                                    className="auth-form__input"
+                                                    placeholder="Email của bạn"
+                                                />
+                                                {errors.mail && <p className="form-message" role="alert">{errors.mail?.message}</p>}
                                             </div>
                                             <div className="auth-form__group">
                                                 <input id="password" name="password" type="password"
-                                                    className="auth-form__input" placeholder="Mật khẩu của bạn" value={password}
-                                                    onChange={(evt) => setPassword(evt.target.value)} />
-                                                <span className="form-message"></span>
+                                                    className="auth-form__input" placeholder="Mật khẩu của bạn"
+                                                    // onChange={(evt) => setPassword(evt.target.value)}
+                                                    {...register("password", {
+                                                        required: "Hãy điền mật khẩu của bạn",
+                                                        minLength: {
+                                                            value: 8,
+                                                            message: "Mật khẩu phải có 8 kí tự"
+                                                        }
+                                                    })}
+                                                />
+                                                {errors.password && <p className="form-message">{errors.password.message}</p>}
+                                            </div>
+                                            <div className="auth-form__controls">
+
+                                                {/* <button className="auth-form__register-btn" onClick={() => login(username, password)}>ĐĂNG NHẬP</button> */}
+                                                <input type="submit" className="auth-form__register-btn" />
+
                                             </div>
 
-                                        </div>
-                                        <div className="auth-form__controls">
+                                        </form>
 
-                                            <button className="auth-form__register-btn" onClick={() => login(username, password)}>ĐĂNG NHẬP</button>
-
-                                        </div>
                                         <div className="auth-form__aside">
                                             <div className="auth-form__help">
                                                 <a href="" className="auth-form__help-link auth-form__help-fogot">Quên mật khẩu</a>

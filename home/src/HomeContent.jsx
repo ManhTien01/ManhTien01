@@ -44,10 +44,10 @@ export default function HomeContent() {
                             <a onClick={() => setCategory('Giày sneaker')} className="category-item__link">Giày sneaker</a>
                         </li>
                         <li className="category-item">
-                            <a href="" className="category-item__link">Giày chelsea boot</a>
+                            <a onClick={() => setCategory('Giày chelsea boot')} className="category-item__link">Giày chelsea boot</a>
                         </li>
                         <li className="category-item">
-                            <a href="" className="category-item__link">Giày thể thao</a>
+                            <a onClick={() => setCategory('Giày thể thao')} className="category-item__link">Giày thể thao</a>
                         </li>
                     </ul>
                 </nav>
@@ -221,7 +221,7 @@ export default function HomeContent() {
 
 
                 <div className="row-df sm-gutter">
-                    {products.data.map((product) => (
+                   {products.total !== 0  ? products.data.map((product) => (
                         <div className="col-df l-2-4 m-df-4 c-6 home-product-item-wrapper" key={product._id}>
                             <div className="home-product-item">
                                 <Link to={`products/${product._id}`}>
@@ -283,7 +283,9 @@ export default function HomeContent() {
 
 
                         </div>
-                    ))}
+                    )): <div className="no-product">
+                        <img src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg//assets/a60759ad1dabe909c46a817ecbf71878.png" alt="" />
+                        </div>}
 
                 </div>
                 <ReactPaginate

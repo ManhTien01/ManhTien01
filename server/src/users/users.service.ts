@@ -11,13 +11,13 @@ export class UsersService {
   private readonly users = [
     {
       userId: 1,
-      username: 'sally',
-      password: '123',
+      username: 'tienstephenks@gmail.com',
+      password: '12345678',
     },
     {
       userId: 2,
-      username: 'maria',
-      password: '123',
+      username: 'manhtientran@gmail.com',
+      password: '12345678',
     },
   ];
 

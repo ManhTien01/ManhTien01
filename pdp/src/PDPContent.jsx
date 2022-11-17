@@ -31,8 +31,8 @@ export default function PDPContent() {
   }
   return (
     <div>
-      <div className="grid__full-width c-0 product-direction">
-        <a href="#" className="button_link">Shoes </a>
+      <div className="grid__full-width product-direction">
+        <a href="/" className="button_link">Shoes </a>
 
         {product.category && <div className="product-direction-icon"><i className="fa-solid fa-angle-right"></i><a href="" className="button_link"> {product.category}</a></div>}
         {product.subcategory && <div className="product-direction-icon"><i className="fa-solid fa-angle-right"></i><a href="" className="button_link">{product.subcategory}</a></div>}

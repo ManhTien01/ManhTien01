@@ -3,8 +3,10 @@ const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPl
 
 const deps = require("./package.json").dependencies;
 module.exports = {
+  
   output: {
     publicPath: "http://localhost:3002/",
+     
   },
 
   resolve: {
@@ -15,7 +17,7 @@ module.exports = {
     port: 3002,
     historyApiFallback: true,
   },
-
+  devtool: "eval-cheap-source-map",
   module: {
     rules: [
       {
