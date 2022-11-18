@@ -42,7 +42,7 @@ export default function Register() {
                                                     id="name" name="name" type="text" className="auth-form__input"
                                                     placeholder="Tên đầy đủ"
                                                 />
-                                                {errors.firstName?.type === 'required' && <p className="form-message" role="alert">First name is required</p>}
+                                                {errors.firstName?.type === 'required' && <p className="form-message" role="alert">Bạn bắt buộc phải điền tên</p>}
                                             </div>
 
                                             <div className="auth-form__group">

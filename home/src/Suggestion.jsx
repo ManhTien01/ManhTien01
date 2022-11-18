@@ -43,7 +43,7 @@ const Suggestion = () => {
                                                     id="name" name="name" type="text" className="auth-form__input"
                                                     placeholder="Độ tuổi"
                                                 />
-                                                {errors.firstName?.type === 'required' && <p className="form-message" role="alert">First name is required</p>}
+                                                {errors.firstName?.type === 'required' && <p className="form-message" role="alert">Bạn bắt buộc phải điền tên</p>}
                                             </div>
 
                                             <div className="auth-form__group">
@@ -53,7 +53,7 @@ const Suggestion = () => {
                                                     id="name" name="name" type="text" className="auth-form__input"
                                                     placeholder="Màu sắc ưa thích"
                                                 />
-                                                {errors.firstName?.type === 'required' && <p className="form-message" role="alert">First name is required</p>}
+                                                {errors.firstName?.type === 'required' && <p className="form-message" role="alert">Bạn bắt buộc phải điền màu sắc</p>}
                                             </div>
                                             <div className="auth-form__group">
                                                 <input
@@ -62,7 +62,7 @@ const Suggestion = () => {
                                                     id="name" name="name" type="text" className="auth-form__input"
                                                     placeholder="Chiều cao"
                                                 />
-                                                {errors.firstName?.type === 'required' && <p className="form-message" role="alert">First name is required</p>}
+                                                {errors.firstName?.type === 'required' && <p className="form-message" role="alert">Bạn bắt buộc phải điền chiều cao</p>}
                                             </div>
                                             <div className="auth-form__group">
                                                 <input
@@ -71,7 +71,7 @@ const Suggestion = () => {
                                                     id="name" name="name" type="text" className="auth-form__input"
                                                     placeholder="Cân nặng"
                                                 />
-                                                {errors.firstName?.type === 'required' && <p className="form-message" role="alert">First name is required</p>}
+                                                {errors.firstName?.type === 'required' && <p className="form-message" role="alert">Bạn bắt buộc phải điền cân nặng</p>}
                                             </div>
                                             <div className="auth-form__controls mb-8">
 
