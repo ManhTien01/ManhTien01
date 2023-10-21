@@ -1,20 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { getProducts } from "./products";
+import React, { useState } from "react";
 
-
-
-const Search = () => {
+const Search = ({onSearch}) => {
 
   const [keyword,setKeyword] = useState('')
 
   const searchHandler = (e) => {
-
     e.preventDefault()
-      window.location.href=`http://localhost:3000/?s=${keyword}`
-      // getProducts(1,`s=${keyword}`)
+    onSearch(keyword)
   }
-
- 
 
   return (
 

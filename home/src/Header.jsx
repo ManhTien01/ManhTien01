@@ -1,12 +1,13 @@
-import React from "react";
+import React , {useState} from "react";
 import MiniCart from "cart/MiniCart"
 import Login from "cart/Login"
 import Register from "cart/Register";
 import Search from "./Search";
 import Suggestion from "./Suggestion";
 
+export default function Header({onSearch}) {
+    const [showLogin, setShowLogin] = useState(false);
 
-export default function Header() {
     return (
         <div className="header">
             <div className="grid wide header">
@@ -84,8 +85,8 @@ export default function Header() {
                         </li> */}
                         <Suggestion/>
 
-                        <Register />
-                        <Login />
+                        <Register setShowLogin={setShowLogin}/>
+                        <Login showLogin={showLogin} setShowLogin={setShowLogin}/>
 
 
                     </ul>
@@ -109,7 +110,7 @@ export default function Header() {
 
 
 
-                    <Search />
+                    <Search onSearch={onSearch}/>
 
 
                     <MiniCart />

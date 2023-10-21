@@ -1,26 +1,26 @@
-import { Module } from '@nestjs/common';
+import { Module} from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path';
-
+import { ConfigModule } from '@nestjs/config';
 import { CartModule } from './modules/cart/cart.module';
 import { ProductsModule } from './modules/products/products.module';
 import { AppController } from './app.controller';
 import { AuthModule } from './auth/auth.module';
-import { UsersService } from './users/users.service';
+import { AppService } from './app.service';
+
 
 @Module({
   
-  controllers: [AppController],
-  providers: [UsersService],
   imports: [
-    MongooseModule.forRoot('mongodb://localhost:27017/QLBG_dev'),
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'public'),
+    ConfigModule.forRoot({
+      envFilePath: '.env',
+      isGlobal: true,
     }),
+    MongooseModule.forRoot(process.env.DB_URI),
     CartModule,
     ProductsModule,
     AuthModule,
   ],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}

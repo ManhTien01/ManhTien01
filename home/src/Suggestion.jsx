@@ -23,10 +23,10 @@ const Suggestion = () => {
             </li>
             {showSuggestion && (
                 <div className="modal modal--active ">
-                    <div className="modal__overlay">
+                    <div className="modal__overlay" onClick={() => setShowSuggestion(!showSuggestion)}>
                         <div className="modal__body">
                             <div className="modal__inner">
-                                <div className="auth-form " id="auth-form">
+                                <div className="auth-form " id="auth-form" onClick={(e) => e.stopPropagation()}>
                                     <div className="auth-form__container">
 
                                         <div className="auth-form__header">

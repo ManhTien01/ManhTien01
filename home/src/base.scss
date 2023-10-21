@@ -87,6 +87,17 @@ a:hover{
     z-index: 999;
     
 }
+.modal_test {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: none;
+  animation: fadeIn linear 0.1s;
+  z-index: 999;
+  
+}
 
 .modal.modal--active {
     display: flex;
@@ -205,10 +216,12 @@ a:hover{
     text-decoration: none;
     display: block;
     padding: 4px 0; 
+    cursor: pointer;
 }
 
 .select-input__link:hover {
     color: var(--primery-color);
+    
 }
 
 /* pagination */

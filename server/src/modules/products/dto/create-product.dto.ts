@@ -1,18 +1,27 @@
-export class CreateProductDto {
-  readonly id: number;
-  readonly name: string;
-  readonly description: string;
-  readonly avatar: string;
-  readonly origin: string;
-  readonly brand: string;
-  readonly price: number;
-  readonly discount: number;
-  readonly color: [string];
-  readonly size: [number];
-  readonly status: boolean;
-  readonly sold: number;
-  readonly amount: number;
-  readonly slug: string;
-  readonly deletedAt: Date;
+interface PriceOptionDto {
+  color: string,
+  size: string,
+  price: number;
+  discount: number;
+  amount: Number,
+  sold: Number,
+}
 
+export interface Product {
+  name: string;
+  description: string;
+  avatar: string;
+  origin: string;
+  brand: string;
+  category: string;
+  subcategory: string;
+  material: string,
+  price: number;
+  discount: number;
+  amount: Number,
+  sold: Number,
+  colors: [string],
+  sizes: [string],
+  priceoption: PriceOptionDto[],
+  images: [string],
 }

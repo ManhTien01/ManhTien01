@@ -1,37 +1,91 @@
-import * as React from "react";
-import { Link, useSearchParams } from "react-router-dom"
-import { numberWithCommas, getProducts } from "./products";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom"
+import { numberWithCommas, searchProductByKeyword, searchProductByCategory } from "./products";
 import ReactPaginate from 'react-paginate';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 
+export default function HomeContent({keyword}) {
+    const [products, setProducts] = useState([])
+    const [category, setCategory] = useState('')
+    const [currentPage, setCurrentPage] = useState(0);
+    const [valueTap, setValueTap] = useState('one')
+    const itemsPerPage = 10;
+    const offset = currentPage * itemsPerPage;
+    const currentPageData = products && products.slice(offset, offset + itemsPerPage);
 
-export default function HomeContent() {
-    const [products, setProducts] = React.useState([])
-    const [value, setValue] = React.useState('two');
-    const [valueSort, setValueSort] = React.useState('sort_time=desc')
-    const [searchParams, setSearchParams] = useSearchParams();
-    const [numberPage, setNumberPage] = React.useState(1);
-    const [category, setCategory] = React.useState('')
-
-    React.useEffect(() => {
-        if (searchParams.get('s') !== null) { getProducts(numberPage, valueSort, searchParams.get('s'),category).then(setProducts) }
-        else {
-            getProducts(numberPage, valueSort, '',category).then(setProducts)
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+              const response = await searchProductByKeyword(keyword);
+              if (!response) {
+                throw new Error('Yêu cầu không thành công');
+              }
+              setProducts(response);
+            } catch (error) {
+              console.error('Lỗi:', error);
+            }
+          };
+      
+          fetchData();
+    }, [keyword])
+    useEffect(() => {
+        try {
+            category && searchProductByCategory(category).then(setProducts)
         }
-    }, [numberPage,valueSort,category])
+        catch (error) {
+            console.log(error)
+        }
+    }, [category])
 
     const handleChange = (event, newValue) => {
-        setValue(newValue);
+        setValueTap(newValue);
     };
-    if (products.data === undefined && products.page === undefined && products.last_page === undefined && products.total === undefined) {
-        return null
-    }
 
-    const handlePageClick = (event) => {
-        setNumberPage( event.selected + 1)
+    const handlePageClick = (selectedPage) => {
+        setCurrentPage(selectedPage.selected);
     };
+
+    const sortAscending = () => {
+        const productsWithDiscount = products.map((product) => ({
+            ...product,
+            discountedPrice: product.price - (product.price * product.discount) / 100,
+        }));
+        const sortedProducts = [...productsWithDiscount].sort((a, b) => a?.discountedPrice - b?.discountedPrice);
+        setProducts(sortedProducts);
+    };
+
+    const sortDescending = () => {
+        const productsWithDiscount = products.map((product) => ({
+            ...product,
+            discountedPrice: product.price - (product.price * product.discount) / 100,
+        }));
+        const sortedProducts = [...productsWithDiscount].sort((a, b) => b?.discountedPrice - a?.discountedPrice);
+        setProducts(sortedProducts);
+    };
+
+    const sortByNewest = () => {
+        const sortedProducts = products.sort((a, b) => {
+            const dateA = new Date(a.createdAt);
+            const dateB = new Date(b.createdAt);
+            return dateB - dateA;
+        });
+        setProducts(sortedProducts);
+
+    };
+
+    const sortBySoldQuantityDescending = () => {
+        const sortedProducts = [...products].sort((a, b) => b?.sold - a?.sold);
+        setProducts(sortedProducts);
+    };
+
+    const sortByAmount = () => {
+        const sortedProducts = [...products].sort((a, b) => b?.amount - a?.amount);
+        setProducts(sortedProducts);
+    };
+
+    
 
     return (
         <div className="row-df sm-gutter content">
@@ -57,7 +111,7 @@ export default function HomeContent() {
                     <span className="home-filter__lable">Sắp xếp theo</span>
                     <Box >
                         <Tabs
-                            value={value}
+                            value={valueTap}
                             onChange={handleChange}
                             TabIndicatorProps={{
                                 sx: {
@@ -85,25 +139,19 @@ export default function HomeContent() {
 
                             }}
                         >
-                            <Tab onClick={() => {
-                                setValueSort('sort_popularity=desc')
-
-                            }}
+                            <Tab
+                                onClick={sortByAmount}
                                 value="one"
                                 label="Phổ biến"
                             />
                             <Tab
-                                onClick={
-                                    () => {
-                                        setValueSort('sort_time=desc')
-                                    }
-                                }
+                                onClick={sortByNewest}
                                 value="two"
                                 label="Mới nhất" />
-                            <Tab onClick={() => {
-                                setValueSort('sort_sold=desc')
-                                // getProducts(1, valueSort).then(setProducts)
-                            }} value="three" label="Bán chạy" />
+                            <Tab
+                                onClick={sortBySoldQuantityDescending}
+                                value="three"
+                                label="Bán chạy" />
                         </Tabs>
                     </Box>
 
@@ -113,15 +161,16 @@ export default function HomeContent() {
                         <i className="select-input__icon fa-solid fa-chevron-down"></i>
                         <ul className="select-input__list">
                             <li className="select-input__icon">
-                                <span onClick={() =>
-
-                                    setValueSort('sort_price=asc')
-                                } className="select-input__link">
+                                <span
+                                    onClick={sortAscending}
+                                    className="select-input__link">
                                     Giá: thấp đến cao
                                 </span>
                             </li>
                             <li className="select-input__icon">
-                                <span onClick={() => setValueSort('sort_price=desc')} className="select-input__link">
+                                <span
+                                    onClick={sortDescending}
+                                    className="select-input__link">
                                     Giá: cao đến thấp
                                 </span>
                             </li>
@@ -130,28 +179,25 @@ export default function HomeContent() {
 
                     <div className="home-filter__page">
                         <span className="home-filter__page-num">
-                            <span className="home-filter__page-current">{products.page}</span>/{products.last_page}
-
-
+                            <span className="home-filter__page-current">{currentPage + 1}</span>/{Math.ceil(products.length / itemsPerPage)}
                         </span>
                         <div className="home-filter__page-control">
-                            {products.page === 1 ?
+                            {currentPage + 1 === 1 ?
                                 <a aria-disabled className="home-filter__page-btn home-filter__page-btn--disabled">
                                     <i className="home-filter__page-icon fa-solid fa-chevron-left"></i>
-
                                 </a>
                                 :
-                                <a onClick={() => setNumberPage(products.page - 1)} className="home-filter__page-btn">
+                                <a onClick={() => setCurrentPage(currentPage - 1)} className="home-filter__page-btn">
                                     <i className="home-filter__page-icon fa-solid fa-chevron-left"></i>
 
                                 </a>}
-                            {products.page === products.last_page ?
+                            {currentPage + 1 === Math.ceil(products.length / itemsPerPage) ?
                                 <a aria-disabled className="home-filter__page-btn home-filter__page-btn--disabled">
                                     <i className="home-filter__page-icon fa-solid fa-chevron-right"></i>
 
                                 </a>
                                 :
-                                <a onClick={() => setNumberPage(products.page + 1)} className="home-filter__page-btn">
+                                <a onClick={() => setCurrentPage(currentPage + 1)} className="home-filter__page-btn">
                                     <i className="home-filter__page-icon fa-solid fa-chevron-right"></i>
 
                                 </a>}
@@ -176,68 +222,24 @@ export default function HomeContent() {
                         <li className="moblie-category__item">
                             <a href="" className="moblie-category__link">Sneaker</a>
                         </li>
-                        <li className="moblie-category__item">
-                            <a href="" className="moblie-category__link">Sneaker</a>
-                        </li>
-                        <li className="moblie-category__item">
-                            <a href="" className="moblie-category__link">Sneaker</a>
-                        </li>
-                        <li className="moblie-category__item">
-                            <a href="" className="moblie-category__link">Sneaker</a>
-                        </li>
-                        <li className="moblie-category__item">
-                            <a href="" className="moblie-category__link">Sneaker</a>
-                        </li>
-                        <li className="moblie-category__item">
-                            <a href="" className="moblie-category__link">Sneaker</a>
-                        </li>
-                        <li className="moblie-category__item">
-                            <a href="" className="moblie-category__link">Sneaker</a>
-                        </li>
-                        <li className="moblie-category__item">
-                            <a href="" className="moblie-category__link">Sneaker</a>
-                        </li>
-                        <li className="moblie-category__item">
-                            <a href="" className="moblie-category__link">Sneaker</a>
-                        </li>
-                        <li className="moblie-category__item">
-                            <a href="" className="moblie-category__link">Sneaker</a>
-                        </li>
-                        <li className="moblie-category__item">
-                            <a href="" className="moblie-category__link">Sneaker</a>
-                        </li>
-                        <li className="moblie-category__item">
-                            <a href="" className="moblie-category__link">Sneaker</a>
-                        </li>
-                        <li className="moblie-category__item">
-                            <a href="" className="moblie-category__link">Sneaker</a>
-                        </li>
-                        <li className="moblie-category__item">
-                            <a href="" className="moblie-category__link">Sneaker</a>
-                        </li>
                     </ul>
-
                 </div>
 
-
                 <div className="row-df sm-gutter">
-                   {products.total !== 0  ? products.data.map((product) => (
-                        <div className="col-df l-2-4 m-df-4 c-6 home-product-item-wrapper" key={product._id}>
+                    {products?.length > 0 ? currentPageData.map((product) => (
+                        <div className="col-df l-2-4 m-df-4 c-6 home-product-item-wrapper" key={product?._id}>
                             <div className="home-product-item">
-                                <Link to={`products/${product._id}`}>
-
-
-                                    <img className="home-product-item__img" src={product.avatar} />
-
-                                    <h4 className="home-product-item__name">{product.name}</h4>
-                                    {product.discount !== 0 ?
+                                <Link to={`products/${product?._id}`}>
+                                    <img className="home-product-item__img" src={product?.avatar} />
+                                    <h4 className="home-product-item__name">{product?.name}</h4>
+                                    {product?.discount !== 0 ?
                                         <div className="home-product-item__price">
-                                            <span className="home-product-item__price-old">{numberWithCommas(product.price)}đ</span>
-                                            <span className="home-product-item__price-new">{numberWithCommas(Math.round(product.price - product.price * product.discount / 100))}đ</span>
+                                            <span className="home-product-item__price-old">{numberWithCommas(product?.price)}đ</span>
+                                            <span className="home-product-item__price-new">{numberWithCommas(Math.round(product?.price - product?.price * product?.discount / 100))}đ</span>
                                         </div>
                                         :
                                         <div className="home-product-item__price">
-                                            <span className="home-product-item__price-new">{numberWithCommas(Math.round(product.price - product.price * product.discount / 100))}đ</span>
+                                            <span className="home-product-item__price-new">{numberWithCommas(Math.round(product?.price - product?.price * product?.discount / 100))}đ</span>
                                         </div>
                                     }
 
@@ -253,11 +255,11 @@ export default function HomeContent() {
                                             <i className="homer-product-item__star--gold fa-solid fa-star"></i>
                                             <i className="fa-solid fa-star"></i>
                                         </div>
-                                        <span className="home-product-item__sold">{product.sold} Đã bán</span>
+                                        <span className="home-product-item__sold">{product?.sold} Đã bán</span>
                                     </div>
                                     <div className="home-product-item__origin">
-                                        <span className="home-product-item__brand">{product.brand}</span>
-                                        <span className="home-product-item__origin-name">{product.origin}</span>
+                                        <span className="home-product-item__brand">{product?.brand}</span>
+                                        <span className="home-product-item__origin-name">{product?.origin}</span>
 
                                     </div>
                                     <div className="home-product-item__favorite">
@@ -265,35 +267,30 @@ export default function HomeContent() {
                                         <span>Yêu thích</span>
                                     </div>
                                     {
-                                        product.discount !== 0
-
+                                        product?.discount !== 0
                                         &&
-
                                         <div className="home-product-item__sale-off">
-                                            <span className="home-product-item__sale-off-percent">{product.discount}%</span>
+                                            <span className="home-product-item__sale-off-percent">{product?.discount}%</span>
                                             <span className="home-product-item__sale-off-laybel">GIẢM</span>
                                         </div>
-
-
-
                                     }
                                 </Link>
 
                             </div>
-
-
                         </div>
-                    )): <div className="no-product">
+                    )) : <div className="no-product">
                         <img src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg//assets/a60759ad1dabe909c46a817ecbf71878.png" alt="" />
-                        </div>}
+                    </div>}
 
                 </div>
                 <ReactPaginate
                     previousLabel={'<<'}
                     nextLabel={'>>'}
                     breakLabel={'...'}
-                    pageCount={products.last_page}
-                    forcePage={products.page - 1}
+                    pageCount={Math.ceil(products.length / itemsPerPage)}
+                    forcePage={currentPage}
+                    pageRangeDisplayed={2}
+                    marginPagesDisplayed={1}
                     onPageChange={handlePageClick}
                     renderOnZeroPageCount={null}
                     containerClassName={"pagination home-product__pagination"}
@@ -306,7 +303,6 @@ export default function HomeContent() {
                     previousLinkClassName={"pagination-item__link"}
                     nextClassName={"pagination-item"}
                     nextLinkClassName={"pagination-item__link"}
-
                 />
 
             </div>

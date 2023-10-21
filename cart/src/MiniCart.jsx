@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom"
 import { cart, clearCart } from './cart'
 import { numberWithCommas } from 'home/products'
+import { getProductById } from 'home/products';
+import ShowCart from './ShowCart';
 
 export default function MiniCart() {
     const [items, setItems] = useState(undefined)
@@ -9,9 +11,9 @@ export default function MiniCart() {
 
 
     useEffect(() => {
-        setItems(cart.value?.cartItems)
+        setItems(cart.value?.products)
         return cart.subscribe((c) => {
-            setItems(c?.cartItems)
+            setItems(c?.products)
         })
     }, [])
     
@@ -53,32 +55,8 @@ export default function MiniCart() {
                                     {/* cart-item  */}
 
                                     {items.map((item) => (
-                                        <React.Fragment key={item.slug}>
-                                            <li className="header__cart-item">
-                                                <img src={item.avatar} alt={item.name} className="header__cart-img" />
-                                                <div className="header__cart-item-infor">
-                                                    <div className="header__cart-item-head">
-                                                        <h5 className="header__cart-item-name">
-                                                            {item.name}
-                                                        </h5>
-                                                        <div className="header__cart-item-price-wrap">
-                                                            <span className="header__cart-item-price">{numberWithCommas(Math.round(item.price - item.price * item.discount / 100))}</span>
-                                                            <span className="header__cart-item-multiply">x</span>
-                                                            <span className="header__cart-item-qnt">{item.quantity}</span>
-
-                                                        </div>
-                                                    </div>
-                                                    <div className="header__cart-item-body">
-                                                        <span className="header__cart-item-description">Phân loại hàng: Bạc</span>
-                                                        <span className="header__cart-item-remove">Xoá</span>
-
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </React.Fragment>
+                                        <ShowCart key={item?.productId} item={item}/>
                                     ))}
-
-
 
                                 </ul>
                                 <div className="header__cart-viewcart">
